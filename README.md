@@ -42,7 +42,7 @@ The backend logic is powered by **Dart**, which handles data exchange, API commu
 Clone the ChatDuck repository from GitHub:
 
 ```bash
-git clone https://github.com/username/ChatDuck.git
+git clone https://github.com/Anton1802/ChatDuck.git
 ```
 
 ### 3. 📦 Installing Dependencies
@@ -50,7 +50,7 @@ git clone https://github.com/username/ChatDuck.git
 Navigate to the project folder and install the necessary dependencies:
 
 ```bash
-cd ChatDuck
+cd ChatDuck/src
 flutter pub get
 ```
 
