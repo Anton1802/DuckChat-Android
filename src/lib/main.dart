@@ -169,9 +169,10 @@ class _ChatPageState extends State<ChatPage> {
                   }).toList(),
                   onChanged: (ModelType? newValue) {
                     setState(() {
+                      chat.clear();
                       selectedModel = newValue;
                       chat.model = selectedModel!;
-                      chat.clear();
+                      chat.history.changeModel(chat.model);
                     });
                   },
                 ),
