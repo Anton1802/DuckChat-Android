@@ -45,8 +45,8 @@ enum Role { user, assistant }
 
 /// Data Model for a Message
 class Message {
-  final Role role;
-  final String content;
+  Role role;
+  String content;
 
   Message(this.role, this.content);
 
@@ -58,10 +58,14 @@ class Message {
 
 /// Data Model for Conversation History
 class History {
-  final ModelType model;
+  ModelType model;
   List<Message> messages = [];
 
   History(this.model);
+  
+  void changeModel(ModelType model){
+    this.model = model;
+  }
 
   void addInput(String message) {
     messages.add(Message(Role.user, message));
@@ -90,7 +94,7 @@ class DuckChat {
   History history;
 
   DuckChat({
-    this.model = ModelType.Claude,
+    this.model = ModelType.GPT4o,
     Dio? dio,
     String? userAgent,
   })  : userAgent = userAgent ??
@@ -132,7 +136,6 @@ class DuckChat {
 
       if (response.headers.value('x-vqd-4') != null) {
         vqd.add(response.headers.value('x-vqd-4')!);
-        print(response.headers.value('x-vqd-4')!);
       } else {
         throw DuckChatException('No x-vqd-4');
       }
