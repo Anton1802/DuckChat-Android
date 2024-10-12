@@ -134,7 +134,7 @@ class _ChatPageState extends State<ChatPage> {
                           color: isUser ? Colors.orangeAccent[200] : Colors.orangeAccent[100],
                           borderRadius: BorderRadius.circular(8.0),
                           ),
-                        child: Text(
+                        child: SelectableText(
                           message.content,
                           style: TextStyle(
                             color: isUser ? Colors.black : Colors.black,
