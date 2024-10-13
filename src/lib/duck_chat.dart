@@ -212,7 +212,6 @@ class DuckChat {
   Future<String> askQuestion(String query) async {
     if (vqd.isEmpty) {
       await getVqd();
-      print("vqd empty!");
     }
     history.addInput(query);
     final message = await getAnswer();
