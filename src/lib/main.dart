@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'duck_chat.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+bool _isLoading = false;
+
 void main() {
   runApp(const App());
 }
@@ -38,7 +40,6 @@ class _ChatPageState extends State<ChatPage> {
   ModelType? selectedModel = ModelType.GPT4o;
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  bool _isLoading = false;
 
   void _clearMessages() {
     setState(() {
@@ -59,8 +60,17 @@ class _ChatPageState extends State<ChatPage> {
   void _sendMessage() async {
     if (_controller.text.isNotEmpty) {
       try {
-        _isLoading = true;
+        setState(() {
+          _isLoading = true;
+        });
+
         await chat.askQuestion(_controller.text);
+
+        setState(() {
+          _isLoading = false;
+          _controller.clear();
+          _scrollToBottom();
+        });
       } catch (e) {
         Fluttertoast.showToast(
           msg: "Error: $e",
@@ -68,15 +78,14 @@ class _ChatPageState extends State<ChatPage> {
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.grey,
-          textColor: Colors.white,
+          textColor: Colors.red,
           fontSize: 16.0,
         );
+        setState(() {
+          _isLoading = false;
+        });
+        
       }
-      setState(() {
-        _controller.clear(); // Clear the text input
-        _scrollToBottom();
-        _isLoading = false;
-      });
     }
   }
 
@@ -92,7 +101,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void dispose() {
     _controller.dispose();
-    _scrollController.dispose(); // Dispose the ScrollController
+    _scrollController.dispose(); 
     super.dispose();
   }
 
@@ -113,9 +122,8 @@ class _ChatPageState extends State<ChatPage> {
           ],
         )
       ),
-      body: Column(
-        children: [
-          Expanded(child: ListView.builder(
+      body: _isLoading ? const Center(child:  CircularProgressIndicator()): Column(
+        children: [  Expanded(child: ListView.builder(
             controller: _scrollController,
             itemCount: chat.history.messages.length,
             itemBuilder: (context, index) {
@@ -126,8 +134,7 @@ class _ChatPageState extends State<ChatPage> {
                 alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
                 child: Column(
                     crossAxisAlignment: isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-                    children: [
-                        Container(
+                    children: [ Container(
                         padding: const EdgeInsets.all(10.0),
                         margin: const EdgeInsets.only(top: 5.0),
                         decoration: BoxDecoration(
