@@ -62,8 +62,10 @@ To run the application on an emulator or a connected physical device, use the fo
 flutter run
 ```
 ## Screenshots
-![](https://i.imgur.com/tdX5GvA.png)
-![](https://i.imgur.com/8pwZju2.png)
-![](https://i.imgur.com/xpGqpUJ.png)
-![](https://i.imgur.com/VnLqQfJ.png)
+<p align="center">
+<img src="https://i.imgur.com/tdX5GvA.png" width="400" height="1000">
+<img src="https://i.imgur.com/8pwZju2.png" width="400" height="1000">
+<img src="https://i.imgur.com/xpGqpUJ.png" width="400" height="1000">
+<img src="https://i.imgur.com/VnLqQfJ.png" width="400" height="1000">
+</p>
 
